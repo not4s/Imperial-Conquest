@@ -69,7 +69,7 @@ runTests thing_inside = do
   return r
 
 forceTest :: NFData b => Test a b -> IO (Test a (Either SomeException b))
-forceTest t@(a :=> b) = timeout' (1 * 10^6) (let !_ = force b in return (a :=> Right b))  -- wait a second
+forceTest t@(a :=> b) = timeout' (2 * 10^6) (let !_ = force b in return (a :=> Right b))  -- wait a second
   `catch` (\(e :: SomeException) -> return (a :=> Left e))
   where timeout' :: Int -> IO a -> IO a
         timeout' n thing_inside =
